@@ -317,7 +317,7 @@ class Turle
       {
         rotate(this.angle);
       }
-      // Rotate by the angle of the l-system when on -
+      // Rotate by negative angle of the l-system when on -
       else if(character == '-')
       {
         rotate(-this.angle);
