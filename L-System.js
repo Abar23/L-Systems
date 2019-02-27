@@ -1,8 +1,13 @@
-const MAX_TURTLES = 7;
+const MAX_TURTLES = 16;
 
 var strings = [[]];
 var turtle = [];
 var currentTurtle = 0;
+
+var xDirection = 0;
+var yDirection = 0;
+var canvasZoon = 1.0;
+var redrawTurtle = false;
 
 function preload()
 {
@@ -13,6 +18,15 @@ function preload()
   strings[[4]] = loadStrings("Tree 5.txt");
   strings[[5]] = loadStrings("Square 1.txt");
   strings[[6]] = loadStrings("Square 2.txt");
+  strings[[7]] = loadStrings("Koch Curve 1.txt");
+  strings[[8]] = loadStrings("Koch Curve 2.txt");
+  strings[[9]] = loadStrings("Koch Curve 3.txt");
+  strings[[10]] = loadStrings("Koch Curve 4.txt");
+  strings[[11]] = loadStrings("Koch Curve 5.txt");//
+  strings[[12]] = loadStrings("Koch Curve 6.txt");
+  strings[[13]] = loadStrings("Koch Curve 7.txt");
+  strings[[14]] = loadStrings("Dragon Curve.txt");
+  strings[[15]] = loadStrings("Sierpinski.txt");
 }
 
 function setup() {
@@ -29,10 +43,20 @@ function setup() {
 
   var button = createButton("Expand");
   button.mousePressed(expandLSystem);
+  rectMode(CENTER);
 }
 
 function draw()
 {
+  translate(width/2,height/2);
+  scale(canvasZoon, canvasZoon);
+  translate(-width/2,-height/2);
+  translate(xDirection, yDirection);
+  if(redrawTurtle)
+  {
+    turtle[currentTurtle].draw();
+    redrawTurtle = false;
+  }
   if(keyIsDown(LEFT_ARROW))
   {
     turtle[currentTurtle].decreaseAngle();
@@ -51,12 +75,43 @@ function expandLSystem()
   turtle[currentTurtle].draw();
 }
 
+function mouseWheel(event)
+{
+  if(event.delta > 0 && canvasZoon - 0.05 > 0)
+  {
+    canvasZoon -= 0.05;
+  }
+  else if(event.delta < 0)
+  {
+    canvasZoon += 0.05;
+  }
+
+  redrawTurtle = true;
+}
+
+function mouseDragged()
+{
+  xDirection += mouseX - pmouseX;
+  yDirection += mouseY - pmouseY;
+  redrawTurtle = true;
+}
+
 function keyPressed()
 {
   if(key == 'R' || key == 'r')
   {
+    xDirection = 0;
+    yDirection = 0;
+    canvasZoon = 1;
+    redrawTurtle = true;
     turtle[currentTurtle].resetTurtle();
-    turtle[currentTurtle].draw();
+  }
+  else if(key == 'Z' || key == 'z')
+  {
+    xDirection = 0;
+    yDirection = 0;
+    canvasZoon = 1;
+    redrawTurtle = true;
   }
   else if(key == 'C' || key == 'c')
   {
@@ -91,6 +146,7 @@ class Turle
   originialLength;
   length;
   colorMode;
+  reductionFactor;
 
   constructor(lSystemDef)
   {
@@ -100,12 +156,13 @@ class Turle
     this.length = lSystemDef[1];
     this.originialLength = this.length;
     this.colorMode = RGB;
+    this.reductionFactor = lSystemDef[2];
   }
 
   expand()
   {
     this.rule.expand();
-    this.length *= 0.5;
+    this.length *= this.reductionFactor;
   }
 
   increaseAngle()
@@ -151,7 +208,7 @@ class Turle
     {
       if(this.colorMode == HSB)
       {
-        stroke(map(i, 0, sentence.length, 0, 100), 100, 75);
+        stroke(map(i, 0, sentence.length - 1, 0, 100), 100, 75);
       }
 
       let character = sentence[i];
@@ -197,10 +254,10 @@ class Rules
 
   constructor(lSystemDef)
   {
-    this.sentence = lSystemDef[2];
-    this.initiator = lSystemDef[2];
+    this.sentence = lSystemDef[3];
+    this.initiator = lSystemDef[3];
     this.ruleMap = new Map();
-    for(let i = 3; i < lSystemDef.length; i++)
+    for(let i = 4; i < lSystemDef.length; i++)
     {
       let rule = lSystemDef[i];
       let axiom = rule[0];

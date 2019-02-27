@@ -1,0 +1,6 @@
+90
+200
+0.25
+F+F+F+F
+f=ffffff
+F=F+f-FF+F+FF+Ff+FF-f+FF-F-FF-Ff-FFF
