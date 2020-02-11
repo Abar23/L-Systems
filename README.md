@@ -12,20 +12,24 @@ Defining a Grammar
 
 Input grammar file format for the program:
 
-Angle in degrees  
-Length  
-Reduction Factor  
-Initial Sentence/Axiom  
-Expansion Rules  
+```
+<Angle in degrees>  
+<Length>  
+<Reduction Factor>  
+<Initial Sentence/Axiom>  
+<Expansion Rules>  
+```
 
 To illistrate the above format, here is "Dragon Curve.txt":
 
+```
 90 <- Angle  
 200 <- Length  
 .73 <- Reduction Factor  
 FX <- Initial Sentence/Axiom  
 X=X+YF+ <- Expansion Rule  
 Y=-FX-Y <- Expansion Rule  
+```
 
 From the file, the program is able to extract all information specified in order to
 properly store, expand, and draw the l-system.
