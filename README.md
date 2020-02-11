@@ -58,7 +58,7 @@ creating the l-system. Examples of grammar input files can be found in the
 Controls
 ========
 
-## Keyboard Controls
+### Keyboard Controls
 
  * Up arrow key: Changes to the next l-system
  
@@ -74,12 +74,12 @@ Controls
 
  * C: Changes the color mode between RGB nad HSB on the selected l-system
     
-## Mouse Controls
+### Mouse Controls
 
  * Mouse wheel: Increases or decreases the zoom of the canvas
 
  * Left click: Click and drag on the canvas to pan
 
-## GUI Controls
+### GUI Controls
 
  * Expand button: On click, it will expand the sentence of the l-system and draw it.
